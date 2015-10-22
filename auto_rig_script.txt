@@ -1,0 +1,38 @@
+//make leg to skin
+joint -p 1 20 0 ;
+joint -p 1 10 .5 ;
+joint -e -zso -oj xyz -sao yup joint1;
+joint -p 1 1 0 ;
+joint -e -zso -oj xyz -sao yup joint2;
+joint -p 1 0 3 ;
+joint -e -zso -oj xyz -sao yup joint3;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0 -pn 1;
+
+//label the joints
+rename "joint1" "hip_joint_skin";
+rename "joint2" "knee_joint_skin";
+rename "joint3" "ankle_joint_skin";
+rename "joint4" "toe_joint_skin";
+
+//make IK leg
+select -r hip_joint_skin ;
+duplicate -smartTransform;
+setAttr "hip_joint_skin1.translateX" 1.5;
+
+//label IK joints
+rename "hip_joint_skin1" "hip_joint_IK";
+select -r hip_joint_IK ;
+//if rename "*_joint_skin" "*_joint_IK";
+
+//create an IK handle
+IKHandleTool;
+select -r hip_joint_IK.rotatePivot ;
+//select -add joint3.rotatePivot ;
+
+//create an IK control
+curve -d 1 -p -1 2 0 -p -2 2 0 -p -2 3 0 -p 1 3 0 -p 1 2 0 -p 0 2 0 -p 0 0 0 -p 1 0 0 -p 1 -1 0 -p -2 -1 0 -p -2 0 0 -p -1 0 0 -p -1 2 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 ;
+select -d curve1 ;
+curve -d 1 -p 2 3 0 -p 2 -1 0 -p 3 -1 0 -p 3 0 0 -p 3.006608 0.652508 0 -p 4 -1 0 -p 5 -1 0 -p 4 1 0 -p 5 3 0 -p 3.85971 3 0 -p 3.006608 1.298098 0 -p 3.006608 2.981246 0 -p 2.015165 2.981246 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 ;
+select -r curve1 curve2 ;
+scale -r .3 .3 3 ;
+move -r 0 22 0 ;
