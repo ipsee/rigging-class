@@ -1,56 +1,51 @@
-
-
 //make upper body joints
-//spine and head
-select -d;
-joint -p 0 20.768264 -0.0214138 ;
-joint -p 0 21.266781 -0.876015 ;
-joint -e -zso -oj xyz -sao yup joint1;
-joint -p 0 22.014557 0.0141945 ;
-joint -e -zso -oj xyz -sao yup joint2;
-joint -p 0 23.225241 0.0141945 ;
-joint -e -zso -oj xyz -sao yup joint3;
-joint -p 0 24.471534 0.0141945 ;
-joint -e -zso -oj xyz -sao yup joint4;
-joint -p 0 26.358778 -0.0214138 ;
-joint -e -zso -oj xyz -sao yup joint5;
-joint -p 0 28.103588 -0.0570222 ;
-joint -e -zso -oj xyz -sao yup joint6;
-joint -p 0 30.667391 0.0141945 ;
-joint -e -zso -oj xyz -sao yup joint7;
-joint -p 0 32.305376 -0.0214138 ;
-joint -e -zso -oj xyz -sao yup joint8;
-joint -p 0 34.014578 -0.0214138 ;
-joint -e -zso -oj xyz -sao yup joint9;
-joint -p 0 37.646632 -0.0214138 ;
-joint -e -zso -oj xyz -sao yup joint10; 
-joint -p 0 32.87511 1.616571 ;
-joint -e -zso -oj xyz -sao yup joint11;
 JointTool;
-select -d joint11 ;
 select -d;
-joint -p 0 32.803894 1.687788 ;
-select -tgl joint10 ;
-parent;
+joint -p 0 20.488474 0.0196026 ;
+joint -p 0 21.265343 -0.901131 ;
+joint -e -zso -oj xyz -sao yup joint1;
+joint -p 0 22.157304 0.221013 ;
+joint -e -zso -oj xyz -sao yup joint2;
+joint -p 0 24.545458 0.451197 ;
+joint -e -zso -oj xyz -sao yup joint3;
+joint -p 0 27.940664 0.0771484 ;
+joint -e -zso -oj xyz -sao yup joint4;
+joint -p 0 30.961822 0.0196026 ;
+joint -e -zso -oj xyz -sao yup joint5;
+joint -p 0 33.982981 -0.0954892 ;
+joint -e -zso -oj xyz -sao yup joint6;
+joint -p 0 37.781008 -0.354446 ;
+joint -e -zso -oj xyz -sao yup joint7;
+joint -e  -oj xyz -secondaryAxisOrient yup -ch -zso;
 
 //label spine
-rename "joint1" "spine_bottom_joint";
-rename "joint2" "knee_joint_skin";
-rename "joint3" "ankle_joint_skin";
-rename "joint4" "toe_joint_skin";
+rename "joint1" "spinebase_joint_skin";
+rename "joint2" "root_joint_skin";
+rename "joint3" "spine_joint_skin";
+rename "joint4" "waist_joint_skin";
+rename "joint5" "chest_joint_skin";
+rename "joint6" "neck_joint_skin";
+rename "joint7" "jaw_joint_skin";
+rename "joint8" "head_joint_skin";
 
 //make arms
 select -d;
 joint -p 0.776878 29.9587 0 ;
-//rename
 joint -p 3.668545 29.996254 0 ;
-joint -e -zso -oj xyz -sao yup joint9;
+joint -e -zso -oj xyz -sao yup joint1;
 joint -p 8.006044 29.883592 0 ;
-joint -e -zso -oj xyz -sao yup joint10;
+joint -e -zso -oj xyz -sao yup joint2;
 joint -p 12.568869 29.977477 0 ;
-joint -e -zso -oj xyz -sao yup joint11;
+joint -e -zso -oj xyz -sao yup joint3;
 joint -e  -oj xyz -secondaryAxisOrient yup -ch -zso;
 makeIdentity -apply true -t 1 -r 1 -s 1 -n 0 -pn 1;
+
+//make hand
+JointTool;
+select -d;
+joint -p 13.7 30 -1.25 ;
+
+
 
 //make leg to skin
 joint -p 1 20 0 ;
