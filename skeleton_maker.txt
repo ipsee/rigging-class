@@ -18,7 +18,7 @@ joint -p 0 37.781008 -0.354446 ;
 joint -e -zso -oj xyz -sao yup joint7;
 joint -e  -oj xyz -secondaryAxisOrient yup -ch -zso;
 
-//label spine
+//Rename spine joints
 rename "joint1" "spinebase_joint_skin";
 rename "joint2" "root_joint_skin";
 rename "joint3" "spine_joint_skin";
@@ -91,7 +91,6 @@ move -r -0.0612751 0 -0.0544667 ;
 select -r joint9|joint3|joint4|joint5 ;
 move -r -0.190634 0 -0.177017 ;
 select -r joint1 ;
-
 select -cl  ;
 select -r joint1 ;
 select -cl  ;
@@ -108,6 +107,8 @@ rotate -r -eu -fo 0 0 -2.499415 ;
 rotate -r -eu -fo 0 -0.681712 0 ;
 select -r joint8 ;
 rotate -r -eu -fo 0 0 -2.918297 ;
+select -r joint1 ;
+setAttr "joint1.translateZ" 0;
 
 //Rename Hand joints
 select -r joint1 ;
@@ -167,8 +168,6 @@ joint -p 12.568869 29.977477 0 ;
 joint -e -zso -oj xyz -sao yup joint3;
 joint -e  -oj xyz -secondaryAxisOrient yup -ch -zso;
 makeIdentity -apply true -t 1 -r 1 -s 1 -n 0 -pn 1;
-move -r 0 0 -1.47984 ;
-rotate -r -eu -fo 0 -0.753168 0 ;
 
 //Rename arm joints
 select -r joint1 ;
@@ -181,6 +180,8 @@ select -r joint4 ;
 rename "joint4" "left_wrist_joint"; 
 
 //make leg to skin
+JointTool;
+select -d;
 joint -p 1 20 0 ;
 joint -p 1 10 .5 ;
 joint -e -zso -oj xyz -sao yup joint1;
@@ -195,49 +196,3 @@ rename "joint1" "hip_joint_skin";
 rename "joint2" "knee_joint_skin";
 rename "joint3" "ankle_joint_skin";
 rename "joint4" "toe_joint_skin";
-
-//make FK leg
-select -r hip_joint_skin ;
-duplicate -smartTransform;
-setAttr "hip_joint_skin1.translateX" -1.5;
-
-//label FK joints
-rename "hip_joint_skin1" "hip_joint_FK";
-rename "|hip_joint_FK|knee_joint_skin" "knee_joint_FK";
-rename "|hip_joint_FK|knee_joint_FK|ankle_joint_skin" "ankle_joint_FK";
-rename "|hip_joint_FK|knee_joint_FK|ankle_joint_FK|toe_joint_skin" "toe_joint_FK";
-
-//make IK leg
-select -r hip_joint_skin ;
-duplicate -smartTransform;
-setAttr "hip_joint_skin1.translateX" 1.5;
-
-//label IK joints
-rename "hip_joint_skin1" "hip_joint_IK";
-rename "|hip_joint_IK|knee_joint_skin" "knee_joint_IK";
-rename "|hip_joint_IK|knee_joint_IK|ankle_joint_skin" "ankle_joint_IK";
-rename "|hip_joint_IK|knee_joint_IK|ankle_joint_IK|toe_joint_skin" "toe_joint_IK";
-
-//create an IK handle
-IKHandleTool;
-select -r hip_joint_IK.rotatePivot ;
-select -add ankle_joint_IK.rotatePivot ;
-select -d hip_joint_IK ;
-
-//create an IK control
-curve -d 1 -p -1 2 0 -p -2 2 0 -p -2 3 0 -p 1 3 0 -p 1 2 0 -p 0 2 0 -p 0 0 0 -p 1 0 0 -p 1 -1 0 -p -2 -1 0 -p -2 0 0 -p -1 0 0 -p -1 2 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 ;
-select -d curve1 ;
-curve -d 1 -p 2 3 0 -p 2 -1 0 -p 3 -1 0 -p 3 0 0 -p 3.006608 0.652508 0 -p 4 -1 0 -p 5 -1 0 -p 4 1 0 -p 5 3 0 -p 3.85971 3 0 -p 3.006608 1.298098 0 -p 3.006608 2.981246 0 -p 2.015165 2.981246 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 ;
-select -r curveShape1 curveShape2 ;
-scale -r .3 .3 3 ;
-move -r 1 22 0 ;
-
-//create controls
-circle -c 1 10 .5 -nr 0 1 0 -sw 360 -r 2 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1; 
-//rename it...
-move -r 1 10 .5 nurbsCircle1.scalePivot nurbsCircle1.rotatePivot ;
-rename "nurbsCircle1" "left_knee_control";
-
-circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1; objectMoveCommand;
-scale -r 2 1 4 ;
-move -r 1 0 1.5 ;
